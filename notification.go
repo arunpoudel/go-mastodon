@@ -77,6 +77,7 @@ func (c *Client) AddPushSubscription(ctx context.Context, endpoint string, publi
 	params.Add("subscription[endpoint]", endpoint)
 	params.Add("subscription[keys][p256dh]", base64.RawURLEncoding.EncodeToString(pk))
 	params.Add("subscription[keys][auth]", base64.RawURLEncoding.EncodeToString(shared))
+	params.Add("data[policy]", "all")
 	if alerts.Follow != nil {
 		params.Add("data[alerts][follow]", strconv.FormatBool(bool(*alerts.Follow)))
 	}
