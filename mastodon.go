@@ -137,14 +137,14 @@ func NewClient(config *Config) *Client {
 }
 
 // Authenticate gets access-token to the API.
-func (c *Client) Authenticate(ctx context.Context, username, password string) error {
+func (c *Client) Authenticate(ctx context.Context, username, password string, scopes []string) error {
 	params := url.Values{
 		"client_id":     {c.Config.ClientID},
 		"client_secret": {c.Config.ClientSecret},
 		"grant_type":    {"password"},
 		"username":      {username},
 		"password":      {password},
-		"scope":         {"read write follow"},
+		"scope":         {strings.Join(scopes, " ")},
 	}
 
 	return c.authenticate(ctx, params)

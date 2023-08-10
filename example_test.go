@@ -29,7 +29,7 @@ func ExampleClient() {
 		ClientID:     "client-id",
 		ClientSecret: "client-secret",
 	})
-	err := c.Authenticate(context.Background(), "your-email", "your-password")
+	err := c.Authenticate(context.Background(), "your-email", "your-password", []string{"read", "write", "follow"})
 	if err != nil {
 		log.Fatal(err)
 	}

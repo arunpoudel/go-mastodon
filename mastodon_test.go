@@ -104,7 +104,7 @@ func TestAuthenticate(t *testing.T) {
 		ClientID:     "foo",
 		ClientSecret: "bar",
 	})
-	err := client.Authenticate(context.Background(), "invalid", "user")
+	err := client.Authenticate(context.Background(), "invalid", "user", []string{"read", "write", "follow"})
 	if err == nil {
 		t.Fatalf("should be fail: %v", err)
 	}
@@ -114,7 +114,7 @@ func TestAuthenticate(t *testing.T) {
 		ClientID:     "foo",
 		ClientSecret: "bar",
 	})
-	err = client.Authenticate(context.Background(), "valid", "user")
+	err = client.Authenticate(context.Background(), "valid", "user", []string{"read", "write", "follow"})
 	if err != nil {
 		t.Fatalf("should not be fail: %v", err)
 	}
@@ -133,7 +133,7 @@ func TestAuthenticateWithCancel(t *testing.T) {
 	})
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel()
-	err := client.Authenticate(ctx, "invalid", "user")
+	err := client.Authenticate(ctx, "invalid", "user", []string{"read", "write", "follow"})
 	if err == nil {
 		t.Fatalf("should be fail: %v", err)
 	}
