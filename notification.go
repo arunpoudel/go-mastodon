@@ -29,10 +29,14 @@ type PushSubscription struct {
 }
 
 type PushAlerts struct {
-	Follow    *Sbool `json:"follow"`
-	Favourite *Sbool `json:"favourite"`
-	Reblog    *Sbool `json:"reblog"`
-	Mention   *Sbool `json:"mention"`
+	Follow        *Sbool `json:"follow"`
+	Favourite     *Sbool `json:"favourite"`
+	Reblog        *Sbool `json:"reblog"`
+	Mention       *Sbool `json:"mention"`
+	Status        *Sbool `json:"status"`
+	FollowRequest *Sbool `json:"follow_request"`
+	Poll          *Sbool `json:"poll"`
+	Update        *Sbool `json:"update"`
 }
 
 // GetNotifications returns notifications.
@@ -84,6 +88,12 @@ func (c *Client) AddPushSubscription(ctx context.Context, endpoint string, publi
 	}
 	if alerts.Mention != nil {
 		params.Add("data[alerts][mention]", strconv.FormatBool(bool(*alerts.Mention)))
+	}
+	if alerts.Update != nil {
+		params.Add("data[alerts][update]", strconv.FormatBool(bool(*alerts.Update)))
+	}
+	if alerts.Status != nil {
+		params.Add("data[alerts][status]", strconv.FormatBool(bool(*alerts.Status)))
 	}
 	err := c.doAPI(ctx, http.MethodPost, "/api/v1/push/subscription", params, &subscription, nil)
 	if err != nil {
